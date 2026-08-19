@@ -130,7 +130,8 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Dark theme — the same tokens, re-declared. Never a `dark:` utility.
+   Dark theme — the same tokens, re-declared. Never a `dark:` colour or type utility;
+   the only `dark:` in the app is ThemeToggle's icon-visibility swap.
    --------------------------------------------------------------------------- */
 .dark {
   color-scheme: dark;

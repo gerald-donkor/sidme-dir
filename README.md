@@ -45,6 +45,7 @@ components/
   chrome/                    container, site header, page header, theme toggle
   directory/                 the list: cards, table, toolbar, pagination, states
   user/                      the profile: avatar, hero, detail cards
+hooks/                       installed alongside the registry, unedited
 lib/users/                   types, the fetch layer, identity hue, formatters, URL state
 docs/                        why things are the way they are
 ```

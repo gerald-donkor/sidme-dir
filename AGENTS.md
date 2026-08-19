@@ -63,8 +63,10 @@ with the user's explicit say-so.
 
 **Styling is tokens, not values.** Semantic tokens only — `bg-primary`, `text-muted-foreground`,
 never `bg-blue-500` or a raw hex. `className` carries **layout**, never colour or typography.
-`gap-*`, never `space-x/y-*`. `size-*` when width equals height. No manual `dark:` overrides — dark
-mode is the same tokens redeclared under `.dark`. No manual `z-index` on overlays.
+`gap-*`, never `space-x/y-*`. `size-*` when width equals height. No manual `dark:` **colour or
+typography** overrides — dark mode is the same tokens redeclared under `.dark`. The one permitted
+use is icon *visibility*: `ThemeToggle` swaps its sun and moon with `dark:hidden` / `hidden
+dark:block`, because no token can express which icon shows. No manual `z-index` on overlays.
 
 **`app/globals.css` is the only place a token is defined.** Customisation order is built-in variant
 → semantic token → a CSS variable in that file. Never a second stylesheet, never a
@@ -74,7 +76,7 @@ mode is the same tokens redeclared under `.dark`. No manual `z-index` on overlay
 components compose it; they do not fork it. A component that needs to look different needs a token,
 not a patched primitive.
 
-**One radius scale, one accent, one icon family.** `--radius: 0.875rem` and the `calc()` ladder
+**One radius scale, one accent, one icon family.** `--radius: 0.75rem` and the `calc()` ladder
 above it. `primary` is the only accent on interactive chrome. Icons are `lucide-react` — the library
 `components.json` configures — and icons inside `Button`, `DropdownMenuItem`, `Alert` and `Sidebar*`
 carry `data-icon="inline-start"` / `"inline-end"` and **no sizing classes**; the component sizes
@@ -242,6 +244,7 @@ components/
   chrome/                              container, site header, page header, theme toggle
   directory/                           the list surface: cards, table, toolbar, empty state
   user/                                the detail surface: hero, detail cards
+hooks/                                 installed by the shadcn CLI — not edited
 lib/
   users/                               types, api, accent, format
   utils.ts                             cn()
