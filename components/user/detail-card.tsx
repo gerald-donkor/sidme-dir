@@ -22,13 +22,14 @@ export interface DetailField {
  * beside it.
  *
  * The wash and top rail use the person's identity complement hue in light mode,
- * resolving to the primary identity hue in dark mode via CSS token redeclaration.
- * This keeps card styling self-contained and off components/ui/card.tsx;
- * docs/design-system.md owns the reasoning.
+ * resolving to the primary identity hue for the top rail and `--card` for the wash
+ * in dark mode via CSS token redeclaration. This keeps card styling self-contained
+ * and off components/ui/card.tsx; docs/design-system.md owns the reasoning.
  *
  * In light mode, `--identity-comp` accents the top rail and `--identity-comp-soft`
- * provides an ambient wash. In dark mode, these map to `--identity` and `--identity-soft`
- * so the detail cards match the hero banner without requiring any dark: utility classes.
+ * provides an ambient wash. In dark mode, `--identity-comp` maps to `--identity` for the
+ * top rail while `--identity-comp-soft` maps to `--card` to produce a flat, solid dark card
+ * background without requiring any dark: utility classes.
  */
 function DetailCard({
   hue,

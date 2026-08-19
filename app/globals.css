@@ -193,14 +193,13 @@
   --identity-3-soft: oklch(0.29 0.055 205);
   --identity-4-soft: oklch(0.29 0.055 168);
   --identity-5-soft: oklch(0.29 0.055 70);
-  --identity-6-soft: oklch(0.29 0.055 12);
-
-  --identity-1-comp-soft: var(--identity-1-soft);
-  --identity-2-comp-soft: var(--identity-2-soft);
-  --identity-3-comp-soft: var(--identity-3-soft);
-  --identity-4-comp-soft: var(--identity-4-soft);
-  --identity-5-comp-soft: var(--identity-5-soft);
-  --identity-6-comp-soft: var(--identity-6-soft);
+  /* In dark mode, detail cards have a solid card background without a color gradient */
+  --identity-1-comp-soft: var(--card);
+  --identity-2-comp-soft: var(--card);
+  --identity-3-comp-soft: var(--card);
+  --identity-4-comp-soft: var(--card);
+  --identity-5-comp-soft: var(--card);
+  --identity-6-comp-soft: var(--card);
 
   --identity-1-ink: oklch(0.87 0.11 277);
   --identity-2-ink: oklch(0.87 0.11 240);

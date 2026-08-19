@@ -96,9 +96,9 @@ the top rail) and ambient soft tint (`--identity-comp-soft` as a gradient wash t
 complement hue rotates 180° from the identity hue at the same lightness and chroma, so the person's
 record reads as a dynamic visual counterweight to their hero banner.
 
-In dark mode, `--identity-N-comp` and `--identity-N-comp-soft` map to `--identity-N` and
-`--identity-N-soft` (`oklch(0.72 0.15 H)` and `oklch(0.29 0.055 H)`), ensuring the detail card top rail
-and ambient wash seamlessly match the hero banner in dark mode.
+In dark mode, `--identity-N-comp` maps to `--identity-N` (`oklch(0.72 0.15 H)`) to keep the top rail
+accented in the person's identity hue, while `--identity-N-comp-soft` maps to `var(--card)` so the
+detail cards render a solid, flat card background with no color gradient wash in dark mode.
 
 The decision lives in `app/globals.css` as a token redeclaration rather than a `dark:` class in the
 component, so the invariant holds: dark mode is the same tokens redeclared, and `detail-card.tsx`
