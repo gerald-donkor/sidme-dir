@@ -69,7 +69,7 @@ layout the whole card *is* the link, which is legitimate because the card contai
 | loading | `app/loading.tsx` and a `<Suspense>` around the list | throttle the network, or search |
 | loaded | — | `/` |
 | empty | `EmptyResults`, via the `Empty` primitive | `/?q=zzzzzz` |
-| error | `app/error.tsx` → `DirectoryError` | point `API_BASE` at an unreachable host |
+| error | `DirectoryBoundary` around the list, `app/error.tsx` around the shell, both → `DirectoryError` | point `API_BASE` in `lib/users/api.ts` at an unreachable host |
 | not found | `app/users/[id]/not-found.tsx` | `/users/9999` |
 
 The `<Suspense>` boundary is **keyed on `` `${query}|${page}` ``**. Without the key, changing the
@@ -80,8 +80,50 @@ The skeleton is shaped like the content it replaces — the same grid below `md`
 above it — so nothing jumps when the data lands.
 
 Error boundaries take **`retry`**, the Next 16.3 prop, not `reset`. `reset` only clears the error
-state and would re-render straight into the same failure; `retry` re-runs the fetch. Both boundaries
-share one `DirectoryError` component so the two screens cannot drift apart.
+state and would re-render straight into the same failure; `retry` re-runs the fetch. Every boundary
+shares one `DirectoryError` component so the screens cannot drift apart.
+
+### The list has its own boundary
+
+`app/error.tsx` is the *segment* boundary, so a failed search replaced the whole page — including
+the search box holding the query that failed. The reader could only retry the same query, never edit
+it. `components/directory/directory-boundary.tsx` fixes that: it wraps the keyed `<Suspense>` and
+nothing else, so `PageHeader` and `DirectoryToolbar` stay mounted and interactive through a failure.
+Verified in the browser — with `API_BASE` pointed at an unreachable host, editing the search box
+still updated `?q=` while the error was on screen, and `retry` recovered in place once the host was
+restored. `app/error.tsx` remains as the net for a throw in the page shell itself.
+
+It is built on **`catchError`** from `next/error` (stable in 16.3.0), not a hand-rolled React error
+boundary: its `retry()` re-fetches inside a Transition, `redirect()` and `notFound()` pass through
+instead of being caught, and the error clears on client navigation. `ErrorInfo` types `error` as
+`unknown`, so the digest is read behind an `instanceof Error` check.
+
+### The digest is shown, the status is not
+
+Every boundary now receives `error`, logs it with `console.error` in a `useEffect`, and passes
+`error.digest` to `DirectoryError`, which renders it as a mono reference line. `UserApiError`
+carries the HTTP status, but Next replaces a Server Component error with a generic message plus
+`digest` in production (`next/dist/docs/.../file-conventions/error.md`), so a UI reading
+`error.status` would work in dev and show nothing in production. The digest is the only identifier
+that crosses the boundary, so it is the only one rendered. Do not "fix" this by surfacing the
+status.
+
+### `app/global-error.tsx`
+
+A throw in the root layout or `ThemeProvider` used to fall through to the framework default. It now
+has a designed page, which renders its own `<html>` and `<body>` because it replaces the root
+layout. Deliberately plain markup rather than `DirectoryError`: the file that failed is also the one
+that sets the `next/font` variables and the theme class, so the registry primitives would render
+without their typography.
+
+### Announcing the wait
+
+The skeletons are decorative and stay `aria-hidden`, but the wait itself needs to reach a screen
+reader. `DirectorySkeleton` renders an `sr-only` `role="status"` beside the bars, defaulting to
+"Loading users"; `/design-system` passes `label={null}` because that page is a reference, not a live
+wait. `app/users/[id]/loading.tsx` carries the same status with "Loading profile", and its
+`aria-hidden` moved off `<main id="content">` — that is the landmark and the skip link's target, and
+hiding it took the whole page away from a screen reader for the duration of the load.
 
 ## The registry's Pagination is used for structure and not for links
 

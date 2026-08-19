@@ -7,6 +7,7 @@ import {
   PageHeaderText,
   PageTitle,
 } from "@/components/chrome/page-header";
+import { DirectoryBoundary } from "@/components/directory/directory-boundary";
 import { DirectorySkeleton } from "@/components/directory/directory-skeleton";
 import { DirectoryResults } from "@/components/directory/directory-results";
 import { DirectoryToolbar } from "@/components/directory/directory-toolbar";
@@ -30,12 +31,19 @@ export default async function DirectoryPage(props: PageProps<"/">) {
         </PageHeader>
 
         {/*
-          Keyed on the query so a new search shows the skeleton again rather
-          than holding the previous page's rows while the next one loads.
+          The boundary wraps the results only, so a failed load leaves the
+          header and the search box mounted and the reader can change the query
+          that failed. app/error.tsx stays as the net for the shell itself.
+
+          The Suspense inside is keyed on the query so a new search shows the
+          skeleton again rather than holding the previous page's rows while the
+          next one loads.
         */}
-        <Suspense key={`${query}|${page}`} fallback={<DirectorySkeleton />}>
-          <DirectoryResults query={query} page={page} />
-        </Suspense>
+        <DirectoryBoundary>
+          <Suspense key={`${query}|${page}`} fallback={<DirectorySkeleton />}>
+            <DirectoryResults query={query} page={page} />
+          </Suspense>
+        </DirectoryBoundary>
       </Container>
     </main>
   );

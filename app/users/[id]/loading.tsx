@@ -3,8 +3,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <main id="content" className="flex-1 pb-16" aria-hidden>
-      <Container className="flex flex-col gap-6 pt-6">
+    <main id="content" className="flex-1 pb-16">
+      <p role="status" className="sr-only">
+        Loading profile
+      </p>
+
+      {/*
+        aria-hidden belongs on the decorative bars, not on <main> — that is the
+        landmark and the skip link's target, and hiding it takes the page away
+        from a screen reader for the whole wait.
+      */}
+      <Container aria-hidden className="flex flex-col gap-6 pt-6">
         <Skeleton className="h-7 w-40" />
 
         <div className="rounded-xl bg-card p-6 ring-1 ring-foreground/10">

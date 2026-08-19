@@ -345,7 +345,12 @@ export default function DesignSystemPage() {
                 <h3 className="font-mono text-xs text-muted-foreground">
                   loading
                 </h3>
-                <DirectorySkeleton rows={2} />
+                {/*
+                  label={null} because this page is a reference, not a live
+                  wait: a role="status" here would announce a load that is not
+                  happening.
+                */}
+                <DirectorySkeleton rows={2} label={null} />
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="font-mono text-xs text-muted-foreground">

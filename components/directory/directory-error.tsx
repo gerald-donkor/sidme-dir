@@ -18,14 +18,22 @@ import {
  * `retry` is the Next 16.3 prop and it re-runs the failed render — unlike
  * `reset`, which only clears the error state and would show the same failure
  * again. The message says what went wrong without leaking a stack trace.
+ *
+ * `digest` is the only part of a Server Component error that survives Next's
+ * production redaction, so it is the only identifier worth showing: it is what
+ * matches this screen to a line in the server log. The HTTP status carried by
+ * UserApiError does not cross the boundary in production and is deliberately
+ * not rendered.
  */
 function DirectoryError({
   title,
   description,
+  digest,
   retry,
 }: {
   title: string;
   description: string;
+  digest?: string;
   retry: () => void;
 }) {
   return (
@@ -36,6 +44,11 @@ function DirectoryError({
         </EmptyMedia>
         <EmptyTitle>{title}</EmptyTitle>
         <EmptyDescription>{description}</EmptyDescription>
+        {digest ? (
+          <p className="font-mono text-xs text-muted-foreground">
+            Reference {digest}
+          </p>
+        ) : null}
       </EmptyHeader>
       <EmptyContent>
         <Button variant="outline" onClick={() => retry()}>

@@ -159,7 +159,7 @@ A change to a data surface is not done until its four states have been seen:
 | loading | throttle the network, or navigate with a cold cache |
 | loaded | `/` and `/users/1` |
 | empty | `/?q=zzzzzz` |
-| error | point `USERS_API` at an unreachable host once, confirm `error.tsx` renders and `retry` recovers |
+| error | point `API_BASE` in `lib/users/api.ts` at an unreachable host once, confirm the boundary renders and `retry` recovers |
 | not found | `/users/9999` — the API returns a real 404 |
 
 Check `/`, `/users/[id]` and `/design-system` at **375px, 768px and 1440px**, in both themes, and
