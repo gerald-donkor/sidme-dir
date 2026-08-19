@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HouseIcon } from "lucide-react";
 
 import { Container } from "@/components/chrome/container";
 import { ThemeToggle } from "@/components/chrome/theme-toggle";
@@ -15,13 +16,19 @@ function SiteHeader() {
           Sidme
         </Link>
         <div className="flex items-center gap-1">
+          {/*
+            The label drops below sm so the header does not crowd at 375px; the
+            icon carries it alone there, and aria-label keeps the button named.
+          */}
           <Button
             variant="ghost"
             size="sm"
             nativeButton={false}
+            aria-label="Home"
             render={<Link href="/" />}
           >
-            Home
+            <HouseIcon data-icon="inline-start" />
+            <span className="hidden sm:inline">Home</span>
           </Button>
           <ThemeToggle />
         </div>

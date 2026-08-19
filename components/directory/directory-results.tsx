@@ -25,7 +25,7 @@ async function DirectoryResults({ query, page }: DirectoryQuery) {
       <EmptyResults query={query} />
     ) : (
       <p className="text-sm text-muted-foreground">
-        The directory is empty right now.
+        No personnel records found right now.
       </p>
     );
   }

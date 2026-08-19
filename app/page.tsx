@@ -20,7 +20,7 @@ export default async function DirectoryPage(props: PageProps<"/">) {
       <Container>
         <PageHeader>
           <PageHeaderText>
-            <PageTitle>Directory</PageTitle>
+            <PageTitle>Personnel</PageTitle>
             <PageDescription>
               Search by name, email or username, and open
               anyone to see full profile.

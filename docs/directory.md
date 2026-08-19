@@ -18,8 +18,10 @@ the URL segment.
 
 If a visitor arrives via a non-canonical URL (such as legacy `/users/22` or a mismatched username
 slug), the server component issues a canonical redirect (`redirect(profileHref(user, query))`),
-preserving any incoming `?q=` and `?page=` query parameters so the "Back to directory" navigation
+preserving any incoming `?q=` and `?page=` query parameters so the "Back to personnel" navigation
 remains intact.
+
+The browse page (`/`) presents the primary heading as "Personnel", with associated navigation and empty-state messaging aligned to personnel records.
 
 The profile hero displays `@{user.username}` in monospace typography directly below the full name.
 

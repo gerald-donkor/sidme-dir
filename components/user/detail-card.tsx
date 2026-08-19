@@ -20,6 +20,11 @@ export interface DetailField {
  * `<dl>` rather than a grid of divs: these really are term/definition pairs,
  * and the markup is what tells a screen reader that "Email" labels the address
  * beside it.
+ *
+ * The wash carries the person's identity hue, the same one on their avatar and
+ * in the hero, so the four cards read as one record rather than four white
+ * boxes. It lives here and not in components/ui/card.tsx precisely so it cannot
+ * leak to any other Card in the app; docs/design-system.md owns the reasoning.
  */
 function DetailCard({
   hue,
@@ -38,12 +43,11 @@ function DetailCard({
   return (
     <Card
       data-identity={hue}
-      className={cn("relative overflow-hidden bg-card", className)}
+      className={cn(
+        "bg-linear-to-br from-(--identity-soft) to-card to-60%",
+        className
+      )}
     >
-      <span
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-1 bg-(--identity)"
-      />
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

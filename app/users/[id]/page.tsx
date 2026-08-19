@@ -24,10 +24,6 @@ import {
 } from "@/lib/users/search-params";
 
 /**
- * `getUser` is wrapped in React.cache(), so this and the page body below share
- * a single request rather than fetching the same person twice per render.
- */
-/**
  * The segment carries the username for readability, but the id is the key. A
  * segment with no leading digits is not a profile at all.
  */
@@ -37,6 +33,10 @@ function requireUserId(segment: string): string {
   return id;
 }
 
+/**
+ * `getUser` is wrapped in React.cache(), so this and the page body below share
+ * a single request rather than fetching the same person twice per render.
+ */
 export async function generateMetadata(
   props: PageProps<"/users/[id]">
 ): Promise<Metadata> {
@@ -60,7 +60,7 @@ export default async function UserProfilePage(
 
   // Old and hand-typed links (/users/22) keep working; they land on the
   // canonical slug instead. The search params come along, because losing them
-  // would break "Back to directory" — the reason they are on the URL at all.
+  // would break "Back to personnel" — the reason they are on the URL at all.
   // redirect() throws, so it sits outside any try.
   const query = parseDirectoryQuery(rawSearchParams);
   if (id !== userSlug(user)) {
@@ -83,7 +83,7 @@ export default async function UserProfilePage(
           render={<Link href={backHref} />}
         >
           <ArrowLeftIcon data-icon="inline-start" />
-          Back to directory
+          Back to personnel
         </Button>
 
         <IdentityHero user={user} />
