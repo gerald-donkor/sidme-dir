@@ -64,10 +64,12 @@ locals for the subtree:
   --identity: var(--identity-3);
   --identity-soft: var(--identity-3-soft);
   --identity-ink: var(--identity-3-ink);
+  --identity-comp-soft: var(--identity-3-comp-soft);
 }
 ```
 
-Consumers then read `bg-(--identity)`, `bg-(--identity-soft)`, `text-(--identity-ink)`. The
+Consumers then read `bg-(--identity)`, `bg-(--identity-soft)`, `text-(--identity-ink)`,
+`bg-(--identity-comp-soft)`. The
 indirection is deliberate: the obvious alternative, `` className={`bg-identity-${hue}`} ``, produces
 a class name Tailwind's scanner cannot see, so the utility is never generated and the colour
 silently does not apply. Every class here is a literal string in the source.
@@ -77,14 +79,53 @@ silently does not apply. Every class here is a literal string in the source.
 `design-taste-frontend` states a Color Consistency Lock: one accent for the whole page. **This
 breaks that rule on purpose**, and the exception is narrow:
 
-- The identity hues appear **only** on identity surfaces — the directory card's top rail, the avatar's fill
-  and ring, the table row's leading rail, the profile hero's wash, and the profile detail card's top rail
-  (`<span aria-hidden className="absolute inset-x-0 top-0 h-1 bg-(--identity)" />`).
+- The identity hues appear **only** on identity surfaces — the directory card's top rail, the avatar's
+  fill and ring, the table row's leading rail, the profile hero's wash, and the profile detail card's
+  surface (`bg-linear-to-br from-(--identity-comp-soft) to-card to-60%`).
 - Every other coloured affordance — buttons, links, focus rings, badges — uses `primary`.
 - Departments and roles use `Badge` variants, **not** identity colour, even though it would be easy.
   A department is not an identity.
 
 Do not extend the palette past those five surfaces, and do not "fix" it back to one hue.
+
+### The complement, and why it is not a seventh accent
+
+The detail cards on a profile take the **complement** of the person's hue, not the hue itself. The
+hero carries the person; the cards below carry their record, and wearing the same hue made the two
+read as one repeated mark. The complement makes them a pair.
+
+| hue | hero | complement | card wash |
+| --- | --- | --- | --- |
+| 1 | violet, 277 | 97 | olive-gold |
+| 2 | blue, 240 | 60 | amber |
+| 3 | cyan, 205 | 25 | terracotta |
+| 4 | teal, 168 | 348 | rose |
+| 5 | amber, 70 | 250 | blue |
+| 6 | rose, 12 | 192 | cyan |
+
+`--identity-N-comp-soft` reuses the **same lightness and chroma** as `--identity-N-soft` and rotates
+only the hue: `oklch(0.955 0.032 H)`. Because L in OKLCH is perceptual lightness, a hue rotation at
+fixed L and C changes the hue and nothing else — the card's text contrast is identical to the wash it
+replaced, and the six complements stay matched to each other exactly as the six hues are. No new
+contrast claim is made, and none needed measuring.
+
+**This is a light-mode treatment only.** Under `.dark`, all six `--identity-N-comp-soft` resolve to
+`var(--card)`, which collapses the gradient to a flat card surface. Dark mode already separates the
+cards from the page by elevation, and a tinted card there competed with the hero instead of
+answering it. The decision lives in `app/globals.css` as a token redeclaration rather than a `dark:`
+class in the component, so the invariant holds: dark mode is the same tokens redeclared, and
+`detail-card.tsx` carries one literal class string that is correct in both themes.
+
+This is not a widening of the deviation above:
+
+- The complement is **derived** from the person's hue, not chosen, so it is still data.
+- It appears on **one surface**, that person's detail cards, and never on chrome, buttons or badges.
+- Only `-comp-soft` exists. There is deliberately no `--identity-comp` at full strength and no
+  `-comp-ink`, because nothing renders them, and a token with no consumer drifts. Card text stays
+  `text-card-foreground` / `text-muted-foreground`.
+
+`/design-system` shows each hue facing its complement in one split tile, and two `DetailCard`s at
+different hues, so a wash that stops tracking the person is visible there before it ships.
 
 ## Type
 

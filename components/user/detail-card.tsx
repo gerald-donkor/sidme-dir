@@ -21,10 +21,15 @@ export interface DetailField {
  * and the markup is what tells a screen reader that "Email" labels the address
  * beside it.
  *
- * The wash carries the person's identity hue, the same one on their avatar and
- * in the hero, so the four cards read as one record rather than four white
- * boxes. It lives here and not in components/ui/card.tsx precisely so it cannot
+ * The wash is the *complement* of the person's identity hue — the same
+ * `data-identity` the hero carries, read as a different local. A teal hero puts
+ * a rose wash on the cards below it, so the record reads as the counterweight
+ * to the portrait rather than a repeat of it, and the cards stop reading as raw
+ * white. It lives here and not in components/ui/card.tsx precisely so it cannot
  * leak to any other Card in the app; docs/design-system.md owns the reasoning.
+ *
+ * Light mode only. In dark mode --identity-comp-soft resolves to --card, so the
+ * same gradient flattens to a plain card and this file needs no dark: branch.
  */
 function DetailCard({
   hue,
@@ -44,7 +49,7 @@ function DetailCard({
     <Card
       data-identity={hue}
       className={cn(
-        "bg-linear-to-br from-(--identity-soft) to-card to-60%",
+        "bg-linear-to-br from-(--identity-comp-soft) to-card to-60%",
         className
       )}
     >

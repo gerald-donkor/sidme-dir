@@ -212,7 +212,7 @@ export default function DesignSystemPage() {
 
           <Section
             title="Identity palette"
-            description="Six hues at a fixed lightness and chroma, so every person's colour carries the same contrast. A hue is derived from a user's id, not chosen, and it appears only on identity surfaces: the card rail, the avatar, the profile wash. This is a deliberate exception to the one-accent rule, and docs/design-system.md holds the reasoning."
+            description="Six hues at a fixed lightness and chroma, so every person's colour carries the same contrast. A hue is derived from a user's id, not chosen, and it appears only on identity surfaces: the card rail, the avatar, the profile wash. Each hue also has a complement, the same lightness and chroma with the hue rotated 180 degrees, which washes the detail cards on that person's profile. The two halves of each tile below are the two registers of one person. The complement is a light-mode treatment: in dark mode it resolves to the card colour, so the right half of each tile goes flat and the detail cards below are plain. This is a deliberate exception to the one-accent rule, and docs/design-system.md holds the reasoning."
           >
             <ul className="grid grid-cols-3 gap-3 sm:grid-cols-6">
               {hues.map((hue) => (
@@ -221,7 +221,16 @@ export default function DesignSystemPage() {
                   data-identity={hue}
                   className="flex flex-col gap-2"
                 >
-                  <div className="h-16 rounded-lg bg-(--identity)" />
+                  {/*
+                    Split so the hue and its complement face each other: the
+                    left half is what marks the person, the right half is what
+                    washes their record. Two swatches side by side would only
+                    list them.
+                  */}
+                  <div className="grid h-16 grid-cols-2 overflow-hidden rounded-lg">
+                    <div className="bg-(--identity)" />
+                    <div className="bg-(--identity-comp-soft)" />
+                  </div>
                   <div className="flex h-10 items-center justify-center rounded-lg bg-(--identity-soft) text-sm font-medium text-(--identity-ink)">
                     Aa
                   </div>
@@ -307,15 +316,24 @@ export default function DesignSystemPage() {
               <div className="[&>div]:block">
                 <UserTable users={SUMMARIES} hrefFor={() => "#"} />
               </div>
-              <DetailCard
-                hue={identityHue(FIXTURES[0].id)}
-                title="Contact"
-                fields={[
-                  { label: "Email", value: FIXTURES[0].email },
-                  { label: "Phone", value: FIXTURES[0].phone, mono: true },
-                  { label: "Username", value: FIXTURES[0].username, mono: true },
-                ]}
-              />
+              {/*
+                Two people, two hues, so the wash is visibly theirs and not a
+                single tint applied to every card.
+              */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {FIXTURES.map((user) => (
+                  <DetailCard
+                    key={user.id}
+                    hue={identityHue(user.id)}
+                    title="Contact"
+                    fields={[
+                      { label: "Email", value: user.email },
+                      { label: "Phone", value: user.phone, mono: true },
+                      { label: "Username", value: user.username, mono: true },
+                    ]}
+                  />
+                ))}
+              </div>
             </div>
           </Section>
 

@@ -180,12 +180,16 @@
   --identity-5-soft: oklch(0.29 0.055 70);
   --identity-6-soft: oklch(0.29 0.055 12);
 
-  --identity-1-comp-soft: oklch(0.29 0.055 97);
-  --identity-2-comp-soft: oklch(0.29 0.055 60);
-  --identity-3-comp-soft: oklch(0.29 0.055 25);
-  --identity-4-comp-soft: oklch(0.29 0.055 348);
-  --identity-5-comp-soft: oklch(0.29 0.055 250);
-  --identity-6-comp-soft: oklch(0.29 0.055 192);
+  /* The complement wash is a light-mode treatment only. Resolving these to
+     --card collapses the detail cards' gradient to a flat card surface here,
+     which keeps the decision in this file: no component carries a dark:
+     override, and the one class string in detail-card.tsx stays literal. */
+  --identity-1-comp-soft: var(--card);
+  --identity-2-comp-soft: var(--card);
+  --identity-3-comp-soft: var(--card);
+  --identity-4-comp-soft: var(--card);
+  --identity-5-comp-soft: var(--card);
+  --identity-6-comp-soft: var(--card);
 
   --identity-1-ink: oklch(0.87 0.11 277);
   --identity-2-ink: oklch(0.87 0.11 240);
