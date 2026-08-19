@@ -25,7 +25,7 @@ async function DirectoryResults({ query, page }: DirectoryQuery) {
       <EmptyResults query={query} />
     ) : (
       <p className="text-sm text-muted-foreground">
-        No personnel records found right now.
+        No users found right now.
       </p>
     );
   }
@@ -39,7 +39,7 @@ async function DirectoryResults({ query, page }: DirectoryQuery) {
         Showing <span className="tabular text-foreground">{from}</span> to{" "}
         <span className="tabular text-foreground">{to}</span> of{" "}
         <span className="tabular text-foreground">{result.total}</span>{" "}
-        {result.total === 1 ? "person" : "people"}
+        {result.total === 1 ? "user" : "users"}
         {query ? <> matching &ldquo;{query}&rdquo;</> : null}
       </p>
 

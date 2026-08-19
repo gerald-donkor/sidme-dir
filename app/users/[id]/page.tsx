@@ -60,7 +60,7 @@ export default async function UserProfilePage(
 
   // Old and hand-typed links (/users/22) keep working; they land on the
   // canonical slug instead. The search params come along, because losing them
-  // would break "Back to personnel" — the reason they are on the URL at all.
+  // would break "Back to users" — the reason they are on the URL at all.
   // redirect() throws, so it sits outside any try.
   const query = parseDirectoryQuery(rawSearchParams);
   if (id !== userSlug(user)) {
@@ -83,7 +83,7 @@ export default async function UserProfilePage(
           render={<Link href={backHref} />}
         >
           <ArrowLeftIcon data-icon="inline-start" />
-          Back to personnel
+          Back to users
         </Button>
 
         <IdentityHero user={user} />

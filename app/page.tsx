@@ -20,10 +20,10 @@ export default async function DirectoryPage(props: PageProps<"/">) {
       <Container>
         <PageHeader>
           <PageHeaderText>
-            <PageTitle>Personnel</PageTitle>
+            <PageTitle>Users</PageTitle>
             <PageDescription>
               Search by name, email or username, and open
-              anyone to see full profile.
+              any user to view their details.
             </PageDescription>
           </PageHeaderText>
           <DirectoryToolbar initialQuery={query} />

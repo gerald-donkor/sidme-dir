@@ -23,13 +23,13 @@ export default function UserNotFound() {
             </EmptyMedia>
             <EmptyTitle>No such profile</EmptyTitle>
             <EmptyDescription>
-              Nobody in the personnel records has that id. They may have been removed,
+              Nobody in the user directory has that id. They may have been removed,
               or the link may be wrong.
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
             <Button nativeButton={false} render={<Link href="/" />}>
-              Back to personnel
+              Back to users
             </Button>
           </EmptyContent>
         </Empty>
