@@ -13,6 +13,17 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    // The shadcn registry is generated, vendored code. AGENTS.md holds it
+    // unedited so it stays regenerable, which means its lint findings are
+    // upstream's to fix and not ours to suppress by rewriting the files.
+    // Two of them trip react-hooks/set-state-in-effect: components/ui/carousel.tsx
+    // and hooks/use-mobile.ts, neither of which this app renders.
+    files: ["components/ui/**", "hooks/**"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

@@ -4,12 +4,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------------------------------------------------------------------------
+   Theme mapping.
+   Tokens are DEFINED below in :root / .dark and only MAPPED here. This file is
+   the single place either happens — see docs/design-system.md.
+   --------------------------------------------------------------------------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+
+  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-display: var(--font-outfit);
+  --font-heading: var(--font-outfit);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,6 +47,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -48,73 +57,173 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ---------------------------------------------------------------------------
+   Light theme.
+   The chrome is a cool near-neutral; colour is reserved for identity.
+   --------------------------------------------------------------------------- */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* Tells the browser to draw scrollbars, form controls and the
+     canvas in the matching scheme. Without it the dark theme keeps
+     light scrollbars. */
+  color-scheme: light;
+
+  --background: oklch(0.99 0.004 265);
+  --foreground: oklch(0.21 0.025 265);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.21 0.025 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --popover-foreground: oklch(0.21 0.025 265);
+  --primary: oklch(0.55 0.21 277);
+  --primary-foreground: oklch(0.985 0.01 277);
+  --secondary: oklch(0.965 0.008 265);
+  --secondary-foreground: oklch(0.3 0.03 265);
+  --muted: oklch(0.965 0.008 265);
+  --muted-foreground: oklch(0.52 0.022 265);
+  --accent: oklch(0.955 0.025 277);
+  --accent-foreground: oklch(0.36 0.11 277);
+  --destructive: oklch(0.58 0.22 25);
+  --border: oklch(0.915 0.008 265);
+  --input: oklch(0.915 0.008 265);
+  --ring: oklch(0.55 0.21 277);
+
+  --radius: 0.75rem;
+
+  /* Identity palette — six hues at a FIXED lightness and chroma, so every
+     person's colour carries identical contrast. Assigned from a user's id in
+     lib/users/accent.ts. Identity surfaces only; never chrome. */
+  --identity-1: oklch(0.55 0.18 277); /* violet */
+  --identity-2: oklch(0.55 0.18 240); /* blue   */
+  --identity-3: oklch(0.55 0.18 205); /* cyan   */
+  --identity-4: oklch(0.55 0.18 168); /* teal   */
+  --identity-5: oklch(0.55 0.18 70); /* amber  */
+  --identity-6: oklch(0.55 0.18 12); /* rose   */
+
+  --identity-1-soft: oklch(0.955 0.032 277);
+  --identity-2-soft: oklch(0.955 0.032 240);
+  --identity-3-soft: oklch(0.955 0.032 205);
+  --identity-4-soft: oklch(0.955 0.032 168);
+  --identity-5-soft: oklch(0.955 0.032 70);
+  --identity-6-soft: oklch(0.955 0.032 12);
+
+  --identity-1-ink: oklch(0.42 0.15 277);
+  --identity-2-ink: oklch(0.42 0.15 240);
+  --identity-3-ink: oklch(0.42 0.15 205);
+  --identity-4-ink: oklch(0.42 0.15 168);
+  --identity-5-ink: oklch(0.42 0.15 70);
+  --identity-6-ink: oklch(0.42 0.15 12);
+
+  /* Charts reuse the identity hues so a chart and a person read as one system. */
+  --chart-1: var(--identity-1);
+  --chart-2: var(--identity-2);
+  --chart-3: var(--identity-3);
+  --chart-4: var(--identity-4);
+  --chart-5: var(--identity-5);
+
+  --sidebar: oklch(0.975 0.006 265);
+  --sidebar-foreground: oklch(0.21 0.025 265);
+  --sidebar-primary: oklch(0.55 0.21 277);
+  --sidebar-primary-foreground: oklch(0.985 0.01 277);
+  --sidebar-accent: oklch(0.955 0.025 277);
+  --sidebar-accent-foreground: oklch(0.36 0.11 277);
+  --sidebar-border: oklch(0.915 0.008 265);
+  --sidebar-ring: oklch(0.55 0.21 277);
 }
 
+/* ---------------------------------------------------------------------------
+   Dark theme — the same tokens, re-declared. Never a `dark:` utility.
+   --------------------------------------------------------------------------- */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  color-scheme: dark;
+
+  --background: oklch(0.175 0.016 265);
+  --foreground: oklch(0.97 0.005 265);
+  --card: oklch(0.215 0.018 265);
+  --card-foreground: oklch(0.97 0.005 265);
+  --popover: oklch(0.225 0.018 265);
+  --popover-foreground: oklch(0.97 0.005 265);
+  --primary: oklch(0.72 0.16 277);
+  --primary-foreground: oklch(0.19 0.05 277);
+  --secondary: oklch(0.27 0.02 265);
+  --secondary-foreground: oklch(0.95 0.008 265);
+  --muted: oklch(0.27 0.02 265);
+  --muted-foreground: oklch(0.7 0.02 265);
+  --accent: oklch(0.3 0.05 277);
+  --accent-foreground: oklch(0.9 0.05 277);
+  --destructive: oklch(0.7 0.19 22);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.16 277);
+
+  --identity-1: oklch(0.72 0.15 277);
+  --identity-2: oklch(0.72 0.15 240);
+  --identity-3: oklch(0.72 0.15 205);
+  --identity-4: oklch(0.72 0.15 168);
+  --identity-5: oklch(0.72 0.15 70);
+  --identity-6: oklch(0.72 0.15 12);
+
+  --identity-1-soft: oklch(0.29 0.055 277);
+  --identity-2-soft: oklch(0.29 0.055 240);
+  --identity-3-soft: oklch(0.29 0.055 205);
+  --identity-4-soft: oklch(0.29 0.055 168);
+  --identity-5-soft: oklch(0.29 0.055 70);
+  --identity-6-soft: oklch(0.29 0.055 12);
+
+  --identity-1-ink: oklch(0.87 0.11 277);
+  --identity-2-ink: oklch(0.87 0.11 240);
+  --identity-3-ink: oklch(0.87 0.11 205);
+  --identity-4-ink: oklch(0.87 0.11 168);
+  --identity-5-ink: oklch(0.87 0.11 70);
+  --identity-6-ink: oklch(0.87 0.11 12);
+
+  --sidebar: oklch(0.215 0.018 265);
+  --sidebar-foreground: oklch(0.97 0.005 265);
+  --sidebar-primary: oklch(0.72 0.16 277);
+  --sidebar-primary-foreground: oklch(0.19 0.05 277);
+  --sidebar-accent: oklch(0.3 0.05 277);
+  --sidebar-accent-foreground: oklch(0.9 0.05 277);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.72 0.16 277);
+}
+
+/* ---------------------------------------------------------------------------
+   Identity binding.
+
+   A component carries `data-identity="1".."6"` and its subtree then reads the
+   three locals below. This is what keeps identity colour token-driven: no
+   component ever names a hue, and no class name is built by string
+   concatenation (which Tailwind could not see).
+   --------------------------------------------------------------------------- */
+@layer base {
+  [data-identity="1"] {
+    --identity: var(--identity-1);
+    --identity-soft: var(--identity-1-soft);
+    --identity-ink: var(--identity-1-ink);
+  }
+  [data-identity="2"] {
+    --identity: var(--identity-2);
+    --identity-soft: var(--identity-2-soft);
+    --identity-ink: var(--identity-2-ink);
+  }
+  [data-identity="3"] {
+    --identity: var(--identity-3);
+    --identity-soft: var(--identity-3-soft);
+    --identity-ink: var(--identity-3-ink);
+  }
+  [data-identity="4"] {
+    --identity: var(--identity-4);
+    --identity-soft: var(--identity-4-soft);
+    --identity-ink: var(--identity-4-ink);
+  }
+  [data-identity="5"] {
+    --identity: var(--identity-5);
+    --identity-soft: var(--identity-5-soft);
+    --identity-ink: var(--identity-5-ink);
+  }
+  [data-identity="6"] {
+    --identity: var(--identity-6);
+    --identity-soft: var(--identity-6-soft);
+    --identity-ink: var(--identity-6-ink);
+  }
 }
 
 @layer base {
@@ -122,9 +231,48 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
   html {
     @apply font-sans;
+  }
+  /* Figures are compared down columns, so they line up. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* No double-tap zoom delay on anything you can press. */
+  a,
+  button,
+  [role="button"],
+  input,
+  label,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+
+  /* Nothing in this app depends on motion to be understood, so under a
+     reduced-motion preference it all stops — including the skeleton pulse,
+     which is the only thing that loops. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* The skip link: off-screen until focused, then the first thing you see. */
+@layer components {
+  .skip-link {
+    @apply sr-only;
+  }
+  .skip-link:focus-visible {
+    @apply not-sr-only fixed top-3 left-3 z-50 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground ring-3 ring-ring/50;
   }
 }
