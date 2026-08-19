@@ -35,7 +35,9 @@ button — there is no second copy for the two to drift apart.
 value and nothing else: after a 300ms debounce it calls `router.replace` inside a transition, and
 the server re-renders the list. A new query resets `page`, because asking for page 4 of a two-page
 result is a broken URL. `isPending` from the transition drives the spinner in the field, so the wait
-is visible without a second loading flag.
+is visible without a second loading flag. When external navigations change `initialQuery` (e.g. clicking
+the logo, "Home" navigation, or browser history), `DirectoryToolbar` syncs its state during render
+so stale inputs are not debounced back into the URL.
 
 The field is `type="search"` for its semantics, but Chromium draws its own clear cross inside such
 an input, which sat beside ours as a second, unlabelled X. A base rule in `app/globals.css` hides

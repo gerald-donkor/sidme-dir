@@ -27,7 +27,13 @@ function DirectoryToolbar({ initialQuery }: { initialQuery: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [value, setValue] = React.useState(initialQuery);
+  const [prevInitialQuery, setPrevInitialQuery] = React.useState(initialQuery);
   const [isPending, startTransition] = React.useTransition();
+
+  if (prevInitialQuery !== initialQuery) {
+    setPrevInitialQuery(initialQuery);
+    setValue(initialQuery);
+  }
 
   const commit = React.useCallback(
     (next: string) => {
