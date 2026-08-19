@@ -23,8 +23,8 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sidme Directory",
-    template: "%s · Sidme Directory",
+    default: "Sidme",
+    template: "%s · Sidme",
   },
   description:
     "Browse the people in the directory, search by name, and open a profile.",
