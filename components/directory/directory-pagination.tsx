@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
@@ -113,6 +114,20 @@ function DirectoryPagination({
             <PageEdge label="Previous page">{previous}</PageEdge>
           )}
         </PaginationItem>
+
+        {start > 1 && (
+          <PaginationItem>
+            <PageLink href={hrefFor(1)} label="Go to page 1">
+              1
+            </PageLink>
+          </PaginationItem>
+        )}
+
+        {start > 2 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
 
         {pages.map((candidate) => (
           <PaginationItem key={candidate}>

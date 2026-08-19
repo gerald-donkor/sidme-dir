@@ -98,6 +98,10 @@ are fine. **`PaginationLink` is not used**, for two reasons found by running the
 honest markup, no mismatch. The registry file itself is untouched — it is regenerable, and the fix
 belongs upstream.
 
+Page 1 is anchored and always accessible from the pagination bar across all pages: when navigating
+beyond the initial pages (`start > 1`), page 1 is prepended as a direct link, with a `PaginationEllipsis`
+(`...`) rendered whenever the sliding window starts beyond page 2 (`start > 2`).
+
 ## What was considered and left out
 
 **View transitions.** The `vercel-react-view-transitions` skill's first-priority pattern is a
