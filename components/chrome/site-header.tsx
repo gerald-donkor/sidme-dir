@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 function SiteHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-border/40 bg-background/20 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_oklch(1_0_0_/_0.15)]">
+    <header className="sticky top-0 z-30 border-b border-border/40 bg-transparent backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_oklch(1_0_0_/_0.15)]">
       <Container className="flex h-14 items-center justify-between gap-4">
         <Link
           href="/"
