@@ -7,6 +7,7 @@ import {
   PageHeaderText,
   PageTitle,
 } from "@/components/chrome/page-header";
+import { DirectoryErrorPreview } from "@/components/directory/directory-error-preview";
 import { DirectorySkeleton } from "@/components/directory/directory-skeleton";
 import { EmptyResults } from "@/components/directory/empty-results";
 import { UserCard } from "@/components/directory/user-card";
@@ -362,17 +363,7 @@ export default function DesignSystemPage() {
                 <h3 className="font-mono text-xs text-muted-foreground">
                   error
                 </h3>
-                {/*
-                  Rendered statically rather than through DirectoryError, which
-                  is a client component with a live retry, and this page must not
-                  ship an interactive control that does nothing.
-                */}
-                <div className="rounded-xl border bg-card p-10 text-center text-sm text-muted-foreground">
-                  See app/error.tsx and app/users/[id]/error.tsx. Both render
-                  the shared DirectoryError with the Next 16.3 retry prop, so
-                  the button re-runs the failed render instead of only clearing
-                  the error.
-                </div>
+                <DirectoryErrorPreview />
               </div>
             </div>
           </Section>

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 function SiteHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-border/50 bg-background/65 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_oklch(1_0_0_/_0.15)]">
+    <header className="sticky top-0 z-30 border-b border-border/40 bg-background/40 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_oklch(1_0_0_/_0.15)]">
       <Container className="flex h-14 items-center justify-between gap-4">
         <Link
           href="/"
@@ -17,17 +17,18 @@ function SiteHeader() {
         </Link>
         <div className="flex items-center gap-1">
           {/*
-            The label drops below sm so the header does not crowd at 375px; the
-            icon carries it alone there, and aria-label keeps the button named.
+            On mobile (<sm) the icon carries the button to avoid crowding;
+            on larger screens (>=sm) the icon is hidden and the text label is shown.
           */}
           <Button
             variant="ghost"
             size="sm"
             nativeButton={false}
             aria-label="Home"
+            className="sm:px-2.5"
             render={<Link href="/" />}
           >
-            <HouseIcon data-icon="inline-start" />
+            <HouseIcon data-icon="inline-start" className="sm:hidden" />
             <span className="hidden sm:inline">Home</span>
           </Button>
           <ThemeToggle />

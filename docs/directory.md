@@ -72,7 +72,7 @@ layout the whole card *is* the link, which is legitimate because the card contai
 | loaded | — | `/` |
 | empty | `EmptyResults`, via the `Empty` primitive | `/?q=zzzzzz` |
 | error | `DirectoryBoundary` around the list, `app/error.tsx` around the shell, both → `DirectoryError` | point `API_BASE` in `lib/users/api.ts` at an unreachable host |
-| not found | `app/users/[id]/not-found.tsx` | `/users/9999` |
+| not found | `app/users/[id]/not-found.tsx` | `/users/9999` (returns HTTP `200`, by design — see below) |
 
 The `<Suspense>` boundary is **keyed on `` `${query}|${page}` ``**. Without the key, changing the
 search holds the previous page's rows on screen while the next ones load, which reads as a frozen
@@ -84,6 +84,31 @@ above it — so nothing jumps when the data lands.
 Error boundaries take **`retry`**, the Next 16.3 prop, not `reset`. `reset` only clears the error
 state and would re-render straight into the same failure; `retry` re-runs the fetch. Every boundary
 shares one `DirectoryError` component so the screens cannot drift apart.
+
+### The streamed not-found returns `200`, and that is correct
+
+`/users/9999` renders `not-found.tsx` with an HTTP status of **`200`**, not `404`. This is
+documented framework behaviour, not a defect. Next's
+`node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/loading.md` ("Status Codes")
+states it directly: once the response body starts streaming the headers are already sent, so "the
+status code of the response cannot be updated". `not-found.md` says the same from the other side —
+`404` for non-streamed responses, `200` for streamed ones.
+
+**`app/users/[id]/loading.tsx` is what starts the stream.** The body begins streaming when a Suspense
+fallback renders, and a `loading.tsx` is exactly that. Deleting it *would* restore the `404` — and
+would cost the profile skeleton, which is a designed state this app ships and a status code nothing
+in this app consumes. The skeleton is worth more. Do not make that trade.
+
+The framework's own mitigation is already live: Next puts `<meta name="robots" content="noindex">` in
+the streamed HTML, so the URL is not indexed even if a crawler calls it a soft 404. Measured, not
+recalled: `curl -s http://localhost:3000/users/9999 | grep robots` returns
+`name="robots" content="noindex"/`.
+
+A real `404` would require checking the resource *before* the body streams, which the doc says to do
+in `proxy`. That means adding a `proxy.ts` this app does not have, plus a second upstream request on
+every profile view, plus either calling `lib/users/api.ts` from the app's edge or building a URL
+outside the data layer — which the data-layer boundary forbids. Not worth it for a read-only
+directory with no compliance or analytics requirement on the status code.
 
 ### The list has its own boundary
 

@@ -129,9 +129,9 @@ doing its job.
 - `Container` — `mx-auto w-full px-4 sm:px-6 lg:px-8`, `max-w-7xl` (or `narrow` at `max-w-3xl`).
 - `PageHeader` / `PageHeaderText` / `PageTitle` / `PageDescription` — the header both pages share.
 - `SiteHeader` — rendered by `app/layout.tsx`, so `loading.tsx`, `error.tsx` and `not-found.tsx`
-  all get the chrome. Renders the brand wordmark ("Sidme") and a clean text "Home" nav button
-  over a mirror-like reflective glass surface (`backdrop-blur-xl backdrop-saturate-150 bg-background/65`
-  with a subtle top specular edge highlight and softened bottom border).
+  all get the chrome. Renders the brand wordmark ("Sidme") and a responsive "Home" nav button (icon
+  on mobile, clean text on desktop) over a frosted mirror transparent glass surface (`backdrop-blur-xl
+  backdrop-saturate-150 bg-background/40` with a subtle top specular edge highlight and softened bottom border).
   The `/design-system` route remains active and reachable directly.
 - `ThemeToggle` — the theme switch, and one of only two client components in the app.
 
