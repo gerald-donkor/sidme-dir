@@ -21,18 +21,14 @@ export interface DetailField {
  * and the markup is what tells a screen reader that "Email" labels the address
  * beside it.
  *
- * The wash is the *complement* of the person's identity hue — the same
- * `data-identity` the hero carries, read as a different local. A teal hero puts
- * a rose wash on the cards below it, so the record reads as the counterweight
- * to the portrait rather than a repeat of it, and the cards stop reading as raw
- * white. It lives here and not in components/ui/card.tsx precisely so it cannot
- * leak to any other Card in the app; docs/design-system.md owns the reasoning.
+ * The wash and top rail use the person's identity complement hue in light mode,
+ * resolving to the primary identity hue in dark mode via CSS token redeclaration.
+ * This keeps card styling self-contained and off components/ui/card.tsx;
+ * docs/design-system.md owns the reasoning.
  *
- * The top rail carries the full-strength complement `--identity-comp`, matching
- * the directory cards' top rails while echoing the complement relationship.
- *
- * Light mode only for the wash. In dark mode --identity-comp-soft resolves to --card,
- * so the same gradient flattens to a plain card and this file needs no dark: branch.
+ * In light mode, `--identity-comp` accents the top rail and `--identity-comp-soft`
+ * provides an ambient wash. In dark mode, these map to `--identity` and `--identity-soft`
+ * so the detail cards match the hero banner without requiring any dark: utility classes.
  */
 function DetailCard({
   hue,

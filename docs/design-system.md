@@ -89,47 +89,23 @@ breaks that rule on purpose**, and the exception is narrow:
 
 Do not extend the palette past those five surfaces, and do not "fix" it back to one hue.
 
-### The complement, and why it is not a seventh accent
+### Detail cards: complement in light mode, identity alignment in dark mode
 
-The detail cards on a profile take the **complement** of the person's hue, not the hue itself. The
-hero carries the person; the cards below carry their record, and wearing the same hue made the two
-read as one repeated mark. The complement makes them a pair.
+In light mode, the detail cards on a profile take the person's complement hue (`--identity-comp` on
+the top rail) and ambient soft tint (`--identity-comp-soft` as a gradient wash to `-card`). The
+complement hue rotates 180° from the identity hue at the same lightness and chroma, so the person's
+record reads as a dynamic visual counterweight to their hero banner.
 
-| hue | hero | complement | card rail & wash |
-| --- | --- | --- | --- |
-| 1 | violet, 277 | 97 | olive-gold |
-| 2 | blue, 240 | 60 | amber |
-| 3 | cyan, 205 | 25 | terracotta |
-| 4 | teal, 168 | 348 | rose |
-| 5 | amber, 70 | 250 | blue |
-| 6 | rose, 12 | 192 | cyan |
+In dark mode, `--identity-N-comp` and `--identity-N-comp-soft` map to `--identity-N` and
+`--identity-N-soft` (`oklch(0.72 0.15 H)` and `oklch(0.29 0.055 H)`), ensuring the detail card top rail
+and ambient wash seamlessly match the hero banner in dark mode.
 
-`--identity-N-comp` and `--identity-N-comp-soft` reuse the **same lightness and chroma** as
-`--identity-N` and `--identity-N-soft` and rotate only the hue: `oklch(0.55 0.18 H)` and
-`oklch(0.955 0.032 H)`. Because L in OKLCH is perceptual lightness, a hue rotation at fixed L
-and C changes the hue and nothing else — the card's rail contrast and wash contrast are identical
-to the primary identity tokens, and the six complements stay matched to each other exactly as the
-six hues are. No new contrast claim is made, and none needed measuring.
+The decision lives in `app/globals.css` as a token redeclaration rather than a `dark:` class in the
+component, so the invariant holds: dark mode is the same tokens redeclared, and `detail-card.tsx`
+carries literal class strings (`bg-(--identity-comp)` and `from-(--identity-comp-soft)`) that are
+correct in both themes.
 
-**The complement wash is a light-mode treatment only.** Under `.dark`, all six `--identity-N-comp-soft`
-resolve to `var(--card)`, which collapses the gradient to a flat card surface. (The full-strength
-top rail `--identity-comp` remains vibrant in both themes at dark lightness `oklch(0.72 0.15 H)`).
-Dark mode already separates the cards from the page by elevation, and a tinted card body there
-competed with the hero instead of answering it. The decision lives in `app/globals.css` as a token
-redeclaration rather than a `dark:` class in the component, so the invariant holds: dark mode is the
-same tokens redeclared, and `detail-card.tsx` carries one literal class string that is correct in
-both themes.
-
-This is not a widening of the deviation above:
-
-- The complement is **derived** from the person's hue, not chosen, so it is still data.
-- It appears on **one surface**, that person's detail cards (top strip and background wash), and
-  never on chrome, buttons or badges.
-- `--identity-comp` drives the top rail, and `--identity-comp-soft` drives the subtle wash.
-  There is deliberately no `-comp-ink`, because nothing renders it. Card text stays
-  `text-card-foreground` / `text-muted-foreground`.
-
-`/design-system` shows each hue facing its complement in one split tile, and two `DetailCard`s at
+`/design-system` shows each hue paired with its soft wash in a split tile, and two `DetailCard`s at
 different hues, so a wash and rail that stop tracking the person are visible there before they ship.
 
 ## Type

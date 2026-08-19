@@ -212,7 +212,7 @@ export default function DesignSystemPage() {
 
           <Section
             title="Identity palette"
-            description="Six hues at a fixed lightness and chroma, so every person's colour carries the same contrast. A hue is derived from a user's id, not chosen, and it appears only on identity surfaces: the card rail, the avatar, the profile wash. Each hue also has a complement, the same lightness and chroma with the hue rotated 180 degrees, which accents and washes the detail cards on that person's profile. The two halves of each tile below are the two registers of one person. The complement wash is a light-mode treatment (flattening in dark mode), while the top strip remains vibrant in both themes. This is a deliberate exception to the one-accent rule, and docs/design-system.md holds the reasoning."
+            description="Six hues at a fixed lightness and chroma, so every person's colour carries the same contrast. A hue is derived from a user's id, not chosen, and it appears on identity surfaces: the card rail, the avatar, the profile hero wash, and the detail cards' top rail and soft ambient wash. Detail cards use the 180° rotated complement hue in light mode and match the hero's identity hue in dark mode. This is a deliberate exception to the one-accent rule, and docs/design-system.md holds the reasoning."
           >
             <ul className="grid grid-cols-3 gap-3 sm:grid-cols-6">
               {hues.map((hue) => (
@@ -222,14 +222,13 @@ export default function DesignSystemPage() {
                   className="flex flex-col gap-2"
                 >
                   {/*
-                    Split so the hue and its complement face each other: the
-                    left half is what marks the person, the right half is what
-                    washes their record. Two swatches side by side would only
-                    list them.
+                    Split so the full identity hue and its soft tint sit together:
+                    the left half is what accents the rail and hero, the right half
+                    is what softly washes their record.
                   */}
                   <div className="grid h-16 grid-cols-2 overflow-hidden rounded-lg">
                     <div className="bg-(--identity)" />
-                    <div className="bg-(--identity-comp-soft)" />
+                    <div className="bg-(--identity-soft)" />
                   </div>
                   <div className="flex h-10 items-center justify-center rounded-lg bg-(--identity-soft) text-sm font-medium text-(--identity-ink)">
                     Aa
