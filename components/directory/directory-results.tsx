@@ -45,11 +45,11 @@ async function DirectoryResults({ query, page }: DirectoryQuery) {
 
       <UserGrid
         users={result.users}
-        hrefFor={(user) => profileHref(user.id, { query, page })}
+        hrefFor={(user) => profileHref(user, { query, page })}
       />
       <UserTable
         users={result.users}
-        hrefFor={(user) => profileHref(user.id, { query, page })}
+        hrefFor={(user) => profileHref(user, { query, page })}
       />
 
       <DirectoryPagination

@@ -242,6 +242,15 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* A search input keeps its semantics, but not the browser's own clear
+     button — this app draws its own, labelled and keyboard-reachable, so the
+     native one is a second cross sitting beside it. */
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
   /* No double-tap zoom delay on anything you can press. */
   a,
   button,

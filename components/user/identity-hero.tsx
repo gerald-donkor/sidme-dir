@@ -32,6 +32,9 @@ function IdentityHero({ user }: { user: User }) {
               <Badge variant="outline">{roleLabel(user.role)}</Badge>
             ) : null}
           </div>
+          <p className="font-mono text-sm text-muted-foreground">
+            @{user.username}
+          </p>
           <p className="text-muted-foreground">
             {user.company.title} at {user.company.name}
           </p>

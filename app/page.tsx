@@ -22,8 +22,8 @@ export default async function DirectoryPage(props: PageProps<"/">) {
           <PageHeaderText>
             <PageTitle>Directory</PageTitle>
             <PageDescription>
-              Everyone in the organisation, with their role, team and where
-              they are based. Open a profile for contact details.
+              Search the whole directory by name, email or username, and open
+              anyone to see their full profile.
             </PageDescription>
           </PageHeaderText>
           <DirectoryToolbar initialQuery={query} />

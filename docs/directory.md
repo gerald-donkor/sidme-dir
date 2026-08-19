@@ -7,8 +7,21 @@ The two routes the assignment asks for, and the states around them.
 | route | render | notes |
 | --- | --- | --- |
 | `/` | dynamic | reads `?q=` and `?page=`, so it is request-time by definition |
-| `/users/[id]` | dynamic | on demand; see `docs/data-layer.md` on `generateStaticParams` |
+| `/users/[id]` | dynamic | accepts id or slug (`/users/22-elijahs`); canonical redirect preserves `?q=` / `?page=` |
 | `/design-system` | static | fixtures only, no fetch — it stays viewable when the API is down |
+
+## Profile route slugs and canonicalisation
+
+Profile URLs carry the username (`/users/${id}-${username}`) for human readability, while the
+leading integer id strictly drives the data fetch. The helper `parseUserSlug` extracts the id from
+the URL segment.
+
+If a visitor arrives via a non-canonical URL (such as legacy `/users/22` or a mismatched username
+slug), the server component issues a canonical redirect (`redirect(profileHref(user, query))`),
+preserving any incoming `?q=` and `?page=` query parameters so the "Back to directory" navigation
+remains intact.
+
+The profile hero displays `@{user.username}` in monospace typography directly below the full name.
 
 ## State lives in the URL
 
@@ -21,6 +34,11 @@ value and nothing else: after a 300ms debounce it calls `router.replace` inside 
 the server re-renders the list. A new query resets `page`, because asking for page 4 of a two-page
 result is a broken URL. `isPending` from the transition drives the spinner in the field, so the wait
 is visible without a second loading flag.
+
+The field is `type="search"` for its semantics, but Chromium draws its own clear cross inside such
+an input, which sat beside ours as a second, unlabelled X. A base rule in `app/globals.css` hides
+`::-webkit-search-cancel-button` and `::-webkit-search-decoration`, leaving the one labelled
+`Clear search` button the toolbar renders.
 
 `profileHref` carries `q` and `page` onto the profile URL, and the profile's back link rebuilds the
 list URL from them. The reader returns to the search they left, not to the top of the directory.

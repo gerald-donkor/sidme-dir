@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { DetailCard } from "@/components/user/detail-card";
-import { IDENTITY_HUE_COUNT } from "@/lib/users/accent";
+import { IDENTITY_HUE_COUNT, identityHue } from "@/lib/users/accent";
 import type { User, UserSummary } from "@/lib/users/types";
 
 export const metadata: Metadata = {
@@ -308,6 +308,7 @@ export default function DesignSystemPage() {
                 <UserTable users={SUMMARIES} hrefFor={() => "#"} />
               </div>
               <DetailCard
+                hue={identityHue(FIXTURES[0].id)}
                 title="Contact"
                 fields={[
                   { label: "Email", value: FIXTURES[0].email },

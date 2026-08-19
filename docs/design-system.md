@@ -77,13 +77,14 @@ silently does not apply. Every class here is a literal string in the source.
 `design-taste-frontend` states a Color Consistency Lock: one accent for the whole page. **This
 breaks that rule on purpose**, and the exception is narrow:
 
-- The identity hues appear **only** on identity surfaces — the card's top rail, the avatar's fill
-  and ring, the table row's leading rail, the profile hero's wash.
+- The identity hues appear **only** on identity surfaces — the directory card's top rail, the avatar's fill
+  and ring, the table row's leading rail, the profile hero's wash, and the profile detail card's top rail
+  (`<span aria-hidden className="absolute inset-x-0 top-0 h-1 bg-(--identity)" />`).
 - Every other coloured affordance — buttons, links, focus rings, badges — uses `primary`.
 - Departments and roles use `Badge` variants, **not** identity colour, even though it would be easy.
   A department is not an identity.
 
-Do not extend the palette past those four surfaces, and do not "fix" it back to one hue.
+Do not extend the palette past those five surfaces, and do not "fix" it back to one hue.
 
 ## Type
 
@@ -106,8 +107,8 @@ doing its job.
 - `Container` — `mx-auto w-full px-4 sm:px-6 lg:px-8`, `max-w-7xl` (or `narrow` at `max-w-3xl`).
 - `PageHeader` / `PageHeaderText` / `PageTitle` / `PageDescription` — the header both pages share.
 - `SiteHeader` — rendered by `app/layout.tsx`, so `loading.tsx`, `error.tsx` and `not-found.tsx`
-  all get the chrome. It was on the pages first, and the not-found screen rendered without a header
-  until it moved.
+  all get the chrome. Renders the brand wordmark and a "Home" nav button with `HouseIcon` (label hidden
+  below `sm` for compact viewports). The `/design-system` route remains active and reachable directly.
 - `ThemeToggle` — the theme switch, and one of only two client components in the app.
 
 ## Rules that bind every component

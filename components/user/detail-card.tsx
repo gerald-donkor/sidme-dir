@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { IdentityHue } from "@/lib/users/accent";
 import { cn } from "@/lib/utils";
 
 export interface DetailField {
@@ -21,10 +22,12 @@ export interface DetailField {
  * beside it.
  */
 function DetailCard({
+  hue,
   title,
   fields,
   className,
 }: {
+  hue: IdentityHue;
   title: string;
   fields: DetailField[];
   className?: string;
@@ -33,7 +36,14 @@ function DetailCard({
   if (shown.length === 0) return null;
 
   return (
-    <Card className={className}>
+    <Card
+      data-identity={hue}
+      className={cn("relative overflow-hidden bg-card", className)}
+    >
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1 bg-(--identity)"
+      />
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
