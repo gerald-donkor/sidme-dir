@@ -28,8 +28,11 @@ export interface DetailField {
  * white. It lives here and not in components/ui/card.tsx precisely so it cannot
  * leak to any other Card in the app; docs/design-system.md owns the reasoning.
  *
- * Light mode only. In dark mode --identity-comp-soft resolves to --card, so the
- * same gradient flattens to a plain card and this file needs no dark: branch.
+ * The top rail carries the full-strength complement `--identity-comp`, matching
+ * the directory cards' top rails while echoing the complement relationship.
+ *
+ * Light mode only for the wash. In dark mode --identity-comp-soft resolves to --card,
+ * so the same gradient flattens to a plain card and this file needs no dark: branch.
  */
 function DetailCard({
   hue,
@@ -49,10 +52,14 @@ function DetailCard({
     <Card
       data-identity={hue}
       className={cn(
-        "bg-linear-to-br from-(--identity-comp-soft) to-card to-60%",
+        "relative bg-linear-to-br from-(--identity-comp-soft) to-card to-60%",
         className
       )}
     >
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1 bg-(--identity-comp)"
+      />
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

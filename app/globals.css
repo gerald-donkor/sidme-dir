@@ -109,6 +109,13 @@
      hue rotates by 180deg. That is what keeps contrast identical to the -soft
      wash above. Used by the profile's detail cards, so a person's record reads
      as the counterweight to their hero rather than a repeat of it. */
+  --identity-1-comp: oklch(0.55 0.18 97);
+  --identity-2-comp: oklch(0.55 0.18 60);
+  --identity-3-comp: oklch(0.55 0.18 25);
+  --identity-4-comp: oklch(0.55 0.18 348);
+  --identity-5-comp: oklch(0.55 0.18 250);
+  --identity-6-comp: oklch(0.55 0.18 192);
+
   --identity-1-comp-soft: oklch(0.955 0.032 97);
   --identity-2-comp-soft: oklch(0.955 0.032 60);
   --identity-3-comp-soft: oklch(0.955 0.032 25);
@@ -173,6 +180,13 @@
   --identity-5: oklch(0.72 0.15 70);
   --identity-6: oklch(0.72 0.15 12);
 
+  --identity-1-comp: oklch(0.72 0.15 97);
+  --identity-2-comp: oklch(0.72 0.15 60);
+  --identity-3-comp: oklch(0.72 0.15 25);
+  --identity-4-comp: oklch(0.72 0.15 348);
+  --identity-5-comp: oklch(0.72 0.15 250);
+  --identity-6-comp: oklch(0.72 0.15 192);
+
   --identity-1-soft: oklch(0.29 0.055 277);
   --identity-2-soft: oklch(0.29 0.055 240);
   --identity-3-soft: oklch(0.29 0.055 205);
@@ -221,36 +235,42 @@
     --identity: var(--identity-1);
     --identity-soft: var(--identity-1-soft);
     --identity-ink: var(--identity-1-ink);
+    --identity-comp: var(--identity-1-comp);
     --identity-comp-soft: var(--identity-1-comp-soft);
   }
   [data-identity="2"] {
     --identity: var(--identity-2);
     --identity-soft: var(--identity-2-soft);
     --identity-ink: var(--identity-2-ink);
+    --identity-comp: var(--identity-2-comp);
     --identity-comp-soft: var(--identity-2-comp-soft);
   }
   [data-identity="3"] {
     --identity: var(--identity-3);
     --identity-soft: var(--identity-3-soft);
     --identity-ink: var(--identity-3-ink);
+    --identity-comp: var(--identity-3-comp);
     --identity-comp-soft: var(--identity-3-comp-soft);
   }
   [data-identity="4"] {
     --identity: var(--identity-4);
     --identity-soft: var(--identity-4-soft);
     --identity-ink: var(--identity-4-ink);
+    --identity-comp: var(--identity-4-comp);
     --identity-comp-soft: var(--identity-4-comp-soft);
   }
   [data-identity="5"] {
     --identity: var(--identity-5);
     --identity-soft: var(--identity-5-soft);
     --identity-ink: var(--identity-5-ink);
+    --identity-comp: var(--identity-5-comp);
     --identity-comp-soft: var(--identity-5-comp-soft);
   }
   [data-identity="6"] {
     --identity: var(--identity-6);
     --identity-soft: var(--identity-6-soft);
     --identity-ink: var(--identity-6-ink);
+    --identity-comp: var(--identity-6-comp);
     --identity-comp-soft: var(--identity-6-comp-soft);
   }
 }

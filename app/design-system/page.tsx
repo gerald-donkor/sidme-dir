@@ -212,7 +212,7 @@ export default function DesignSystemPage() {
 
           <Section
             title="Identity palette"
-            description="Six hues at a fixed lightness and chroma, so every person's colour carries the same contrast. A hue is derived from a user's id, not chosen, and it appears only on identity surfaces: the card rail, the avatar, the profile wash. Each hue also has a complement, the same lightness and chroma with the hue rotated 180 degrees, which washes the detail cards on that person's profile. The two halves of each tile below are the two registers of one person. The complement is a light-mode treatment: in dark mode it resolves to the card colour, so the right half of each tile goes flat and the detail cards below are plain. This is a deliberate exception to the one-accent rule, and docs/design-system.md holds the reasoning."
+            description="Six hues at a fixed lightness and chroma, so every person's colour carries the same contrast. A hue is derived from a user's id, not chosen, and it appears only on identity surfaces: the card rail, the avatar, the profile wash. Each hue also has a complement, the same lightness and chroma with the hue rotated 180 degrees, which accents and washes the detail cards on that person's profile. The two halves of each tile below are the two registers of one person. The complement wash is a light-mode treatment (flattening in dark mode), while the top strip remains vibrant in both themes. This is a deliberate exception to the one-accent rule, and docs/design-system.md holds the reasoning."
           >
             <ul className="grid grid-cols-3 gap-3 sm:grid-cols-6">
               {hues.map((hue) => (

@@ -64,12 +64,13 @@ locals for the subtree:
   --identity: var(--identity-3);
   --identity-soft: var(--identity-3-soft);
   --identity-ink: var(--identity-3-ink);
+  --identity-comp: var(--identity-3-comp);
   --identity-comp-soft: var(--identity-3-comp-soft);
 }
 ```
 
 Consumers then read `bg-(--identity)`, `bg-(--identity-soft)`, `text-(--identity-ink)`,
-`bg-(--identity-comp-soft)`. The
+`bg-(--identity-comp)`, `bg-(--identity-comp-soft)`. The
 indirection is deliberate: the obvious alternative, `` className={`bg-identity-${hue}`} ``, produces
 a class name Tailwind's scanner cannot see, so the utility is never generated and the colour
 silently does not apply. Every class here is a literal string in the source.
@@ -81,7 +82,7 @@ breaks that rule on purpose**, and the exception is narrow:
 
 - The identity hues appear **only** on identity surfaces — the directory card's top rail, the avatar's
   fill and ring, the table row's leading rail, the profile hero's wash, and the profile detail card's
-  surface (`bg-linear-to-br from-(--identity-comp-soft) to-card to-60%`).
+  top rail (`bg-(--identity-comp)`) and surface wash (`bg-linear-to-br from-(--identity-comp-soft) to-card to-60%`).
 - Every other coloured affordance — buttons, links, focus rings, badges — uses `primary`.
 - Departments and roles use `Badge` variants, **not** identity colour, even though it would be easy.
   A department is not an identity.
@@ -94,7 +95,7 @@ The detail cards on a profile take the **complement** of the person's hue, not t
 hero carries the person; the cards below carry their record, and wearing the same hue made the two
 read as one repeated mark. The complement makes them a pair.
 
-| hue | hero | complement | card wash |
+| hue | hero | complement | card rail & wash |
 | --- | --- | --- | --- |
 | 1 | violet, 277 | 97 | olive-gold |
 | 2 | blue, 240 | 60 | amber |
@@ -103,29 +104,33 @@ read as one repeated mark. The complement makes them a pair.
 | 5 | amber, 70 | 250 | blue |
 | 6 | rose, 12 | 192 | cyan |
 
-`--identity-N-comp-soft` reuses the **same lightness and chroma** as `--identity-N-soft` and rotates
-only the hue: `oklch(0.955 0.032 H)`. Because L in OKLCH is perceptual lightness, a hue rotation at
-fixed L and C changes the hue and nothing else — the card's text contrast is identical to the wash it
-replaced, and the six complements stay matched to each other exactly as the six hues are. No new
-contrast claim is made, and none needed measuring.
+`--identity-N-comp` and `--identity-N-comp-soft` reuse the **same lightness and chroma** as
+`--identity-N` and `--identity-N-soft` and rotate only the hue: `oklch(0.55 0.18 H)` and
+`oklch(0.955 0.032 H)`. Because L in OKLCH is perceptual lightness, a hue rotation at fixed L
+and C changes the hue and nothing else — the card's rail contrast and wash contrast are identical
+to the primary identity tokens, and the six complements stay matched to each other exactly as the
+six hues are. No new contrast claim is made, and none needed measuring.
 
-**This is a light-mode treatment only.** Under `.dark`, all six `--identity-N-comp-soft` resolve to
-`var(--card)`, which collapses the gradient to a flat card surface. Dark mode already separates the
-cards from the page by elevation, and a tinted card there competed with the hero instead of
-answering it. The decision lives in `app/globals.css` as a token redeclaration rather than a `dark:`
-class in the component, so the invariant holds: dark mode is the same tokens redeclared, and
-`detail-card.tsx` carries one literal class string that is correct in both themes.
+**The complement wash is a light-mode treatment only.** Under `.dark`, all six `--identity-N-comp-soft`
+resolve to `var(--card)`, which collapses the gradient to a flat card surface. (The full-strength
+top rail `--identity-comp` remains vibrant in both themes at dark lightness `oklch(0.72 0.15 H)`).
+Dark mode already separates the cards from the page by elevation, and a tinted card body there
+competed with the hero instead of answering it. The decision lives in `app/globals.css` as a token
+redeclaration rather than a `dark:` class in the component, so the invariant holds: dark mode is the
+same tokens redeclared, and `detail-card.tsx` carries one literal class string that is correct in
+both themes.
 
 This is not a widening of the deviation above:
 
 - The complement is **derived** from the person's hue, not chosen, so it is still data.
-- It appears on **one surface**, that person's detail cards, and never on chrome, buttons or badges.
-- Only `-comp-soft` exists. There is deliberately no `--identity-comp` at full strength and no
-  `-comp-ink`, because nothing renders them, and a token with no consumer drifts. Card text stays
+- It appears on **one surface**, that person's detail cards (top strip and background wash), and
+  never on chrome, buttons or badges.
+- `--identity-comp` drives the top rail, and `--identity-comp-soft` drives the subtle wash.
+  There is deliberately no `-comp-ink`, because nothing renders it. Card text stays
   `text-card-foreground` / `text-muted-foreground`.
 
 `/design-system` shows each hue facing its complement in one split tile, and two `DetailCard`s at
-different hues, so a wash that stops tracking the person is visible there before it ships.
+different hues, so a wash and rail that stop tracking the person are visible there before they ship.
 
 ## Type
 
