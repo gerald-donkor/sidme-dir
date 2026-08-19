@@ -36,14 +36,18 @@ function DirectorySkeleton({ rows = 8 }: { rows?: number }) {
         {items.map((item) => (
           <div
             key={item}
-            className="flex items-center gap-3 border-b px-4 py-3 last:border-b-0"
+            className="flex items-center gap-4 border-b px-4 py-3.5 last:border-b-0"
           >
             <Skeleton className="size-8 shrink-0 rounded-full" />
-            <div className="flex flex-1 flex-col gap-2">
-              <Skeleton className="h-4 w-44" />
-              <Skeleton className="h-3 w-56" />
+            <div className="flex flex-1 flex-col gap-1.5">
+              <Skeleton className="h-4 w-40" />
+              <Skeleton className="h-3 w-52" />
             </div>
-            <Skeleton className="hidden h-4 w-32 lg:block" />
+            <div className="flex flex-1 flex-col gap-1.5">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-3 w-16" />
+            </div>
+            <Skeleton className="hidden h-4 w-28 lg:block" />
             <Skeleton className="hidden h-5 w-24 rounded-4xl xl:block" />
             <Skeleton className="h-4 w-24" />
           </div>

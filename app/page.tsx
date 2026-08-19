@@ -22,8 +22,8 @@ export default async function DirectoryPage(props: PageProps<"/">) {
           <PageHeaderText>
             <PageTitle>Directory</PageTitle>
             <PageDescription>
-              Search the whole directory by name, email or username, and open
-              anyone to see their full profile.
+              Search by name, email or username, and open
+              anyone to see full profile.
             </PageDescription>
           </PageHeaderText>
           <DirectoryToolbar initialQuery={query} />

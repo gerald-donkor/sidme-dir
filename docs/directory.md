@@ -52,7 +52,9 @@ rows and is `hidden md:block`. Both are in the DOM, one is displayed, **and ther
 request**. Two components fetching for two breakpoints would be the easy mistake here.
 
 The table drops columns as it narrows — Company below `lg`, Department below `xl` — rather than
-scrolling sideways, and the card carries the same facts stacked.
+scrolling sideways, and the card carries the same facts stacked. Cells and headers use `px-4 py-3.5`
+spacing (`h-11` on headers) with `h-11` identity rail indicators for a comfortable, balanced row
+rhythm without cramped elements.
 
 Only the name is a link in a table row. A row-wide click target would either nest interactive
 elements inside a `<tr>` or need a JS row handler that keyboard users cannot reach. In the card

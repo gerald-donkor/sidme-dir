@@ -33,12 +33,12 @@ function UserTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-px" />
-            <TableHead>Name</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead className="hidden lg:table-cell">Company</TableHead>
-            <TableHead className="hidden xl:table-cell">Department</TableHead>
-            <TableHead>Location</TableHead>
+            <TableHead className="w-px p-0" />
+            <TableHead className="h-11 px-4 py-3.5">Name</TableHead>
+            <TableHead className="h-11 px-4 py-3.5">Role</TableHead>
+            <TableHead className="hidden h-11 px-4 py-3.5 lg:table-cell">Company</TableHead>
+            <TableHead className="hidden h-11 px-4 py-3.5 xl:table-cell">Department</TableHead>
+            <TableHead className="h-11 px-4 py-3.5">Location</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -51,14 +51,14 @@ function UserTable({
               <TableCell className="p-0">
                 <span
                   aria-hidden
-                  className="block h-10 w-1 rounded-r-full bg-(--identity)"
+                  className="block h-11 w-1 rounded-r-full bg-(--identity)"
                 />
               </TableCell>
 
-              <TableCell>
-                <div className="flex items-center gap-3">
+              <TableCell className="px-4 py-3.5">
+                <div className="flex items-center gap-3.5">
                   <UserAvatar user={user} />
-                  <div className="flex min-w-0 flex-col">
+                  <div className="flex min-w-0 flex-col gap-0.5">
                     <Link
                       href={hrefFor(user)}
                       className="truncate rounded-sm font-medium outline-none hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -72,7 +72,7 @@ function UserTable({
                 </div>
               </TableCell>
 
-              <TableCell>
+              <TableCell className="px-4 py-3.5">
                 <div className="flex flex-col gap-1">
                   <span className="truncate">{user.company.title}</span>
                   {user.role !== "user" ? (
@@ -83,15 +83,15 @@ function UserTable({
                 </div>
               </TableCell>
 
-              <TableCell className="hidden max-w-[18ch] truncate text-muted-foreground lg:table-cell">
+              <TableCell className="hidden max-w-[18ch] truncate px-4 py-3.5 text-muted-foreground lg:table-cell">
                 {user.company.name}
               </TableCell>
 
-              <TableCell className="hidden xl:table-cell">
+              <TableCell className="hidden px-4 py-3.5 xl:table-cell">
                 <Badge variant="secondary">{user.company.department}</Badge>
               </TableCell>
 
-              <TableCell className="text-muted-foreground">
+              <TableCell className="px-4 py-3.5 text-muted-foreground">
                 {shortLocation(user.address)}
               </TableCell>
             </TableRow>

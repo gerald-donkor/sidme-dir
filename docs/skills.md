@@ -15,6 +15,7 @@ stage — this file is the map of which one owns which surface.
 | `vercel-react-best-practices` | how the React and Next.js code is written | The rules that actually bind two routes and a fetch layer: `server-cache-react` (`React.cache()` around `getUser`, so the page body and `generateMetadata` share one call), `async-suspense-boundaries`, `server-serialization` and `server-dedup-props` (pass the minimum into a client leaf), `bundle-barrel-imports` (import icons directly), `rerender-use-deferred-value` (the search input) |
 | `vercel-react-view-transitions` | the list-to-detail transition | Its own gate applies: a transition stays only if it communicates a spatial relationship. Here that is the avatar travelling from card to detail hero. Never call `startViewTransition` by hand, and **do not install `react@canary`** — the App Router already runs the React canary |
 | `web-design-guidelines` | the final audit pass | It carries no local rules; it fetches the Vercel Web Interface Guidelines fresh over the network on each run and reports `file:line` findings. Needs connectivity. Run it over `app/**` and `components/**` before calling the build done |
+| `caveman-commit` | commit messages on prompt completion and user request | Generates ultra-compressed conventional commit messages when committing prompt executions or whenever the user asks to commit to `main` |
 
 ## Excluded, and why
 

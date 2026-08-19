@@ -126,8 +126,11 @@ For every implementation request:
 9. Run the checks in §2 and quote their output.
 10. Record what was built in the `docs/` file that owns the area. **Never in this file.**
 11. State the exact steps to see the change running.
+12. Commit to `main` using the `caveman-commit` skill (`.agents/skills/caveman-commit`).
 
-Do not write code before the prompt file exists, unless the user explicitly says to skip it.
+Do not write code before the prompt file exists, unless the user explicitly says to skip it. Anytime a prompt file from `prompts/` is executed, commit the work to `main` using `caveman-commit`.
+
+**Commits.** Whenever the user says "commit", "commit to main", or requests anything involving creating a commit, always use the `caveman-commit` skill (`.agents/skills/caveman-commit`).
 
 **Resuming in a new session.** Establish what is already built from **the files on disk**, never
 from `prompts/` — a prompt file proves a prompt was written, never that it ran (§9 rule 5).
@@ -139,6 +142,7 @@ from `prompts/` — a prompt file proves a prompt was written, never that it ran
 - `npm run start` — run the production build locally
 - `npm run lint` — ESLint
 - `npm run typecheck` — `tsc --noEmit`
+- Commits: always use the `caveman-commit` skill (`.agents/skills/caveman-commit`)
 
 Run `typecheck`, `lint` and `build` before reporting work complete. **Report the exact output; never
 claim a check passed without running it.**
@@ -181,6 +185,8 @@ section.
 else. A skill loaded while *writing* the prompt is not loaded when the prompt *runs*, so an unlisted
 skill is one the implementation will silently work without. **And listing is not loading** — step 8
 invokes every skill the section names before writing code.
+
+**Post-execution commit.** Anytime a prompt file from `prompts/` is executed, commit all resulting changes to `main` using the `caveman-commit` skill (`.agents/skills/caveman-commit`).
 
 ---
 
